@@ -25,6 +25,8 @@ public class WeatherServiceFunction implements Function<WeatherRequest, WeatherR
                     httpHeaders.set("Accept", "application/json");
                     httpHeaders.set("Content-Type", "application/json");
                 }).build();
+
+        // 400 Bad Request: "{"error": "Searching by city parameter requires a premium subscription."}"
         
         return restClient.get().uri(uriBuilder -> {
             System.out.println("Building URI for weather request: " + weatherRequest);
