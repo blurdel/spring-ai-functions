@@ -19,4 +19,9 @@ public class QuestionController {
         return service.getAnswer(question);
     }
 
+    @PostMapping("/stock")
+    public Answer getStockPrice(@RequestBody Question question) {
+        return service.getStockPrice(question);
+    }
+
 }

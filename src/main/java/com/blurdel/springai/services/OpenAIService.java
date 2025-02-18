@@ -7,4 +7,5 @@ public interface OpenAIService {
 
     Answer getAnswer(Question question);
 
+    Answer getStockPrice(Question question);
 }
