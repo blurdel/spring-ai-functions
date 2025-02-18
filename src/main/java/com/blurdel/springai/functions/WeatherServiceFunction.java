@@ -31,6 +31,8 @@ public class WeatherServiceFunction implements Function<WeatherRequest, WeatherR
         return restClient.get().uri(uriBuilder -> {
             System.out.println("Building URI for weather request: " + weatherRequest);
 
+//            uriBuilder.queryParam("latitude", weatherRequest.latitude());
+//            uriBuilder.queryParam("longitude", weatherRequest.longitude());
             uriBuilder.queryParam("city", weatherRequest.location());
 
             if (weatherRequest.state() != null && !weatherRequest.state().isBlank()) {
@@ -39,6 +41,7 @@ public class WeatherServiceFunction implements Function<WeatherRequest, WeatherR
             if (weatherRequest.country() != null && !weatherRequest.country().isBlank()) {
                 uriBuilder.queryParam("country", weatherRequest.country());
             }
+
             return uriBuilder.build();
         }).retrieve().body(WeatherResponse.class);
     }
