@@ -4,11 +4,13 @@ import com.blurdel.springai.functions.WeatherServiceFunction;
 import com.blurdel.springai.model.Answer;
 import com.blurdel.springai.model.Question;
 import com.blurdel.springai.model.WeatherRequest;
+import com.blurdel.springai.model.WeatherResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
+import org.springframework.ai.model.ModelOptionsUtils;
 import org.springframework.ai.model.function.FunctionCallback;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatOptions;
@@ -36,6 +38,11 @@ public class OpenAIServiceImpl implements OpenAIService {
                 .functionCallbacks(List.of(FunctionCallback.builder()
                         .function("CurrentWeather", new WeatherServiceFunction(apiNinjasKey))
                         .description("Get the current weather for a location")
+                                .responseConverter(resp -> {
+                                    String schema = ModelOptionsUtils.getJsonSchema(WeatherResponse.class, false);
+                                    String json = ModelOptionsUtils.toJsonString(resp);
+                                    return schema + "\n" + json;
+                                })
                         .inputType(WeatherRequest.class)
                         .build()))
                 .build();
