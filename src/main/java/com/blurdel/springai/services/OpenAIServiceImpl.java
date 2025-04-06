@@ -68,6 +68,8 @@ public class OpenAIServiceImpl implements OpenAIService {
                                 .responseConverter(resp -> {
                                     String schema = ModelOptionsUtils.getJsonSchema(WeatherResponse.class, false);
                                     String json = ModelOptionsUtils.toJsonString(resp);
+
+                                    System.out.println(schema + "\n" + json);
                                     return schema + "\n" + json;
                                 })
                         .inputType(WeatherRequest.class)
